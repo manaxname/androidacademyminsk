@@ -7,20 +7,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
-//const val MOVIE_POSITION_MESSAGE = "android.academy.movie_position"
+const val MOVIE_POSITION_MESSAGE = "android.academy.movie_position"
 
 class MoviesActivity : AppCompatActivity(), OnItemClickListener {
 
     override fun onItemClicked(movie: Movie) {
-        //Toast.makeText(this, "Movie clicked ${movie.name}", Toast.LENGTH_SHORT).show()
-        val extras = Bundle()
-        extras.putString("title", movie.name)
-        extras.putString("description", movie.description)
-        extras.putString("published", movie.publishedOn)
-        extras.putString("url", movie.url)
-        extras.putInt("poster", movie.pic_big)
         val detailsActivity = Intent(this, DetailsActivity::class.java)
-        detailsActivity.putExtras(extras)
+        detailsActivity.putExtra(MOVIE_POSITION_MESSAGE, movie)
         startActivity(detailsActivity)
     }
 
