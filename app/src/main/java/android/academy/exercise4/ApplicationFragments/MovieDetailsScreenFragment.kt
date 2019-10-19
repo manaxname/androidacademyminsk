@@ -3,6 +3,8 @@ package android.academy.exercise4.ApplicationFragments
 import android.academy.exercise4.R
 import android.academy.exercise4.data.Movie
 import android.academy.exercise4.data.Movie_To_Fragment_Key
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +33,11 @@ class MovieDetailsScreenFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_movie_details, container, false)
         val movie: Movie = arguments?.getParcelable(Movie_To_Fragment_Key) ?: return view
+        BindView(view, movie)
+        return view
+    }
+
+    private fun BindView(view: View, movie: Movie) {
         val title: TextView = view.findViewById(R.id.details_title)
         title.text = movie.name
         val description: TextView = view.findViewById(R.id.details_description)
@@ -43,6 +50,9 @@ class MovieDetailsScreenFragment : Fragment() {
         val sImage: Int = movie.pic_normal
         poster.setImageResource(Image)
         sposter.setImageResource(sImage)
-        return view
+        poster.setOnClickListener {
+            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(movie.url))
+            startActivity(webIntent)
+        }
     }
 }
