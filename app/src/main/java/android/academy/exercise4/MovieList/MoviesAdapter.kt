@@ -1,5 +1,6 @@
-package android.academy.exercise4
+package android.academy.exercise4.MovieList
 
+import android.academy.exercise4.R
 import android.academy.exercise4.data.Movie
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ interface OnItemClickListener{
     fun onItemClicked(movie: Movie)
 }
 
-class MoviesAdapter(var movies: List<Movie>, val itemClickListener: OnItemClickListener) :
+class MoviesAdapter(var movies: List<Movie>, val itemClickListener: OnItemClickListener?) :
     RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

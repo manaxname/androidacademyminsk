@@ -1,5 +1,6 @@
-package android.academy.exercise4
+package android.academy.exercise4.MovieList
 
+import android.academy.exercise4.R
 import android.academy.exercise4.data.Movie
 import android.view.View
 import android.widget.ImageView
@@ -11,13 +12,13 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val title: TextView = itemView.findViewById(R.id.title)
     private val description: TextView = itemView.findViewById(R.id.description)
 
-    fun bind(movie: Movie, clickListener: OnItemClickListener) {
+    fun bind(movie: Movie, clickListener: OnItemClickListener?) {
         poster.setImageResource(movie.pic_normal)
         title.text = movie.name
         description.text = movie.description
 
         itemView.setOnClickListener {
-            clickListener.onItemClicked(movie)
+            clickListener?.onItemClicked(movie)
         }
     }
 }

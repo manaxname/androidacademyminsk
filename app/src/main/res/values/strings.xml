@@ -4,4 +4,6 @@
     <string name="action_settings">Settings</string>
     <string name="title">Title</string>
     <string name="published_on">Published On</string>
+    <string name="small_poster">Small poster</string>
+    <string name="big_poster">Big poster</string>
 </resources>
