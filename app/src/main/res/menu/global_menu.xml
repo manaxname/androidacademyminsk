@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="android.academy.exercise4.MoviesActivity">
+
+    <group
+        android:id="@+id/coorutines_group"
+        android:enabled="true"
+        android:menuCategory="container"
+        android:visible="true">
+
+        <item
+            android:id="@+id/open_coroutines_activity"
+            android:orderInCategory="100"
+            android:title="@string/open_coroutines_activity"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/open_thread_handler_activity"
+            android:orderInCategory="120"
+            android:title="@string/open_thread_handler_activity"
+            app:showAsAction="never" />
+    </group>
+    <!--item
+        android:id="@+id/tt"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" /-->
+</menu>

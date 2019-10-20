@@ -6,4 +6,12 @@
     <string name="published_on">Published On</string>
     <string name="small_poster">Small poster</string>
     <string name="big_poster">Big poster</string>
+    <string name="open_thread_handler_activity">Open Thread Handler Activity</string>
+    <string name="open_coroutines_activity">Open Coroutines Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancel">Cancel</string>
+    <string name="start">Start</string>
+    <string name="create">Create</string>
 </resources>
