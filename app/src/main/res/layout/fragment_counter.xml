@@ -41,6 +41,8 @@
         android:id="@+id/threadStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimaryDark"
         tools:text="This is Fragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
