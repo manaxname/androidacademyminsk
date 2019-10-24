@@ -5,6 +5,7 @@ import android.academy.exercise4.R
 import android.academy.exercise4.Tasks.TaskEventsListener
 import android.academy.exercise4.Tasks.TaskExecuter
 import android.academy.exercise4.Tasks.TaskExecutorFactory
+import android.academy.exercise4.data.Task_Current_Value
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 
 class CounterFragment : Fragment(), TaskEventsListener {
-    private var taskExecuter: TaskExecuter? = null
+    private lateinit var taskExecuter: TaskExecuter
     private lateinit var resultWidget: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +47,11 @@ class CounterFragment : Fragment(), TaskEventsListener {
         val cancelButton: Button = view.findViewById(R.id.cancel)
         resultWidget = view.findViewById(R.id.threadStatus)
         createButton.setOnClickListener {
-            taskExecuter?.create()
+            taskExecuter.create()
         }
         startButton.setOnClickListener {
-            val isStarted: Boolean? = taskExecuter?.start()
-            if (isStarted == null)
-            {
+            val isStarted: Boolean? = taskExecuter.start()
+            if (isStarted == null) {
                 showMessage("TaskExecuter in null")
                 return@setOnClickListener
             }
@@ -59,16 +59,30 @@ class CounterFragment : Fragment(), TaskEventsListener {
                 showMessage("Task is not created")
         }
         cancelButton.setOnClickListener {
-            taskExecuter?.cancel(false)
+            taskExecuter.cancel(false)
         }
         resultWidget.text = "Ready!"
         return view
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (taskExecuter.isInProcess)
+            outState.putInt(Task_Current_Value, taskExecuter.currentValue)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (savedInstanceState != null) {
+            taskExecuter.currentValue = savedInstanceState.getInt(Task_Current_Value)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        taskExecuter?.cancel(true)
+        taskExecuter.cancel(true)
     }
+
     private fun showMessage(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }

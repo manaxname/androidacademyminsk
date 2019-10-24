@@ -1,8 +1,13 @@
 package android.academy.exercise4.Tasks
 
+import android.academy.exercise4.data.Task_Init_Value
 import kotlinx.coroutines.*
 
-class CounterCoroutinesTask(private val listener: TaskEventsListener) : CoroutineScope,
+class CounterCoroutinesTask(
+    private val listener: TaskEventsListener,
+    override var currentValue: Int = 0,
+    override var isInProcess: Boolean = false
+) : CoroutineScope,
     TaskExecuter {
 
     private var task: Job? = null
@@ -10,13 +15,16 @@ class CounterCoroutinesTask(private val listener: TaskEventsListener) : Coroutin
     override fun create() {
         task = launch(context = Dispatchers.Default, start = CoroutineStart.LAZY) {
 
-            for (time in 10 downTo 1) {
+            val startValue = if (currentValue == 0) Task_Init_Value else currentValue
+            for (times in startValue downTo 0) {
                 launch(Dispatchers.Main) {
-                    listener.onProgressUpdate(time)
+                    currentValue = times
+                    listener.onProgressUpdate(times)
                 }
                 delay(1000)
             }
             launch(Dispatchers.Main) {
+                isInProcess = false
                 listener.onPostExecute()
             }
         }
@@ -26,6 +34,7 @@ class CounterCoroutinesTask(private val listener: TaskEventsListener) : Coroutin
         if (task == null)
             return false
         listener.onPreExecute()
+        isInProcess = true
         return task!!.start()
     }
 
@@ -33,6 +42,7 @@ class CounterCoroutinesTask(private val listener: TaskEventsListener) : Coroutin
         task?.cancel()
         if (cancelContext)
             coroutineContext.cancel()
+        isInProcess = false
         listener.onPostExecute()
     }
 
