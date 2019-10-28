@@ -1,8 +1,9 @@
 package android.academy.exercise4.Tasks
 
+import android.academy.exercise4.data.TaskModel
+
 interface TaskExecuter {
-    var currentValue: Int
-    val isInProcess: Boolean
+    val model: TaskModel
     fun create()
     fun start(): Boolean
     fun cancel(cancelContext: Boolean)

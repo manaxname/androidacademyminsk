@@ -1,12 +1,12 @@
 package android.academy.exercise4.Tasks
 
+import android.academy.exercise4.Tasks.TaskStatus.*
+import android.academy.exercise4.data.TaskModel
 import android.academy.exercise4.data.Task_Init_Value
 import kotlinx.coroutines.*
 
 class CounterCoroutinesTask(
-    private val listener: TaskEventsListener,
-    override var currentValue: Int = 0,
-    override var isInProcess: Boolean = false
+    override val model: TaskModel
 ) : CoroutineScope,
     TaskExecuter {
 
@@ -15,26 +15,24 @@ class CounterCoroutinesTask(
     override fun create() {
         task = launch(context = Dispatchers.Default, start = CoroutineStart.LAZY) {
 
-            val startValue = if (currentValue == 0) Task_Init_Value else currentValue
+            val startValue: Int = if (model.currentValue.value == null || model.currentValue.value == 0) Task_Init_Value else model.currentValue.value!!
             for (times in startValue downTo 0) {
                 launch(Dispatchers.Main) {
-                    currentValue = times
-                    listener.onProgressUpdate(times)
+                    model.currentValue.value = times
                 }
                 delay(1000)
             }
             launch(Dispatchers.Main) {
-                isInProcess = false
-                listener.onPostExecute()
+                model.status.value = Finished
             }
         }
+        model.status.value = Created
     }
 
     override fun start(): Boolean {
         if (task == null)
             return false
-        listener.onPreExecute()
-        isInProcess = true
+        model.status.value = Started
         return task!!.start()
     }
 
@@ -42,8 +40,7 @@ class CounterCoroutinesTask(
         task?.cancel()
         if (cancelContext)
             coroutineContext.cancel()
-        isInProcess = false
-        listener.onPostExecute()
+        model.status.value = Stopped
     }
 
     override val coroutineContext = SupervisorJob()

@@ -1,20 +1,12 @@
 package android.academy.exercise4
 
 import android.academy.exercise4.ApplicationFragments.CounterFragment
-import android.academy.exercise4.Tasks.CounterCoroutinesTask
-import android.academy.exercise4.Tasks.TaskEventsListener
-import android.academy.exercise4.Tasks.TaskExecuter
-import android.academy.exercise4.Tasks.TaskExecutorFactory
 import android.academy.exercise4.data.Coroutine_Fragment_Key
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
-class CoroutineActivity : AppCompatActivity(), TaskExecutorFactory {
+class CoroutineActivity : AppCompatActivity() {
     private lateinit var fragment: CounterFragment
-
-    override fun getTaskExecutor(listener: TaskEventsListener): TaskExecuter {
-        return CounterCoroutinesTask(listener)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
