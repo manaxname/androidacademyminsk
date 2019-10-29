@@ -26,11 +26,10 @@ class CounterCoroutinesTask(
         model.status.value = Created
     }
 
-    override fun start(): Boolean {
-        if (task == null)
-            return false
+    override fun start() {
+        create()
         model.status.value = Started
-        return task!!.start()
+        task?.start()
     }
 
     override fun cancel() {

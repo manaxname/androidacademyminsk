@@ -44,13 +44,7 @@ class CounterFragment : Fragment() {
             taskExecuter.create()
         }
         startButton.setOnClickListener {
-            val isStarted: Boolean? = taskExecuter.start()
-            if (isStarted == null) {
-                showMessage("TaskExecuter in null")
-                return@setOnClickListener
-            }
-            if (isStarted == false)
-                showMessage("Task is not created")
+            taskExecuter.start()
         }
         cancelButton.setOnClickListener {
             taskExecuter.cancel()
@@ -79,9 +73,5 @@ class CounterFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         taskExecuter.stop()
-    }
-
-    private fun showMessage(message: String) {
-        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 }
