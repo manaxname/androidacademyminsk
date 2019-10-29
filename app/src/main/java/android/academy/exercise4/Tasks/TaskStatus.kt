@@ -5,5 +5,6 @@ enum class TaskStatus {
     Created,
     Started,
     Stopped,
+    Canceled,
     Finished
 }

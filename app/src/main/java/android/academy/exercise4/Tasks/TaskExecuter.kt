@@ -6,5 +6,6 @@ interface TaskExecuter {
     val model: TaskModel
     fun create()
     fun start(): Boolean
-    fun cancel(cancelContext: Boolean)
+    fun cancel()
+    fun stop()
 }

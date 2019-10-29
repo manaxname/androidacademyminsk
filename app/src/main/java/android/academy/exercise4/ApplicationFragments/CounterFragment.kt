@@ -53,7 +53,7 @@ class CounterFragment : Fragment() {
                 showMessage("Task is not created")
         }
         cancelButton.setOnClickListener {
-            taskExecuter.cancel(false)
+            taskExecuter.cancel()
         }
         taskModel.currentValue.observe(this, Observer<Int> { item ->
             resultWidget.text = item.toString()
@@ -62,18 +62,23 @@ class CounterFragment : Fragment() {
             status ->
             when(status){
                 TaskStatus.Started -> resultWidget.text = "Start"
-                TaskStatus.Stopped -> resultWidget.text = "Canceled"
+                TaskStatus.Canceled -> resultWidget.text = "Canceled"
                 TaskStatus.Created -> resultWidget.text = "Ready!"
                 TaskStatus.Finished -> resultWidget.text = "Done"
                 TaskStatus.Unknown -> resultWidget.text = "Task isn't created"
             }
         })
+        if (taskModel.status.value == TaskStatus.Stopped)
+        {
+            taskExecuter.create()
+            taskExecuter.start()
+        }
         return view
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        taskExecuter.cancel(true)
+        taskExecuter.stop()
     }
 
     private fun showMessage(message: String) {

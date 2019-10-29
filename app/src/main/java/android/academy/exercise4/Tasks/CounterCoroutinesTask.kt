@@ -15,7 +15,8 @@ class CounterCoroutinesTask(
     override fun create() {
         task = launch(context = Dispatchers.Default, start = CoroutineStart.LAZY) {
 
-            val startValue: Int = if (model.currentValue.value == null || model.currentValue.value == 0) Task_Init_Value else model.currentValue.value!!
+            val startValue: Int =
+                if (model.currentValue.value == null || model.currentValue.value == 0) Task_Init_Value else model.currentValue.value!!
             for (times in startValue downTo 0) {
                 model.currentValue.postValue(times)
                 delay(1000)
@@ -32,10 +33,15 @@ class CounterCoroutinesTask(
         return task!!.start()
     }
 
-    override fun cancel(cancelContext: Boolean) {
+    override fun cancel() {
         task?.cancel()
-        if (cancelContext)
-            coroutineContext.cancel()
+        model.currentValue.value = 0
+        model.status.value = Canceled
+    }
+
+    override fun stop() {
+        task?.cancel()
+        coroutineContext.cancel()
         model.status.value = Stopped
     }
 
