@@ -17,14 +17,10 @@ class CounterCoroutinesTask(
 
             val startValue: Int = if (model.currentValue.value == null || model.currentValue.value == 0) Task_Init_Value else model.currentValue.value!!
             for (times in startValue downTo 0) {
-                launch(Dispatchers.Main) {
-                    model.currentValue.value = times
-                }
+                model.currentValue.postValue(times)
                 delay(1000)
             }
-            launch(Dispatchers.Main) {
-                model.status.value = Finished
-            }
+            model.status.postValue(Finished)
         }
         model.status.value = Created
     }

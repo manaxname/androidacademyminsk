@@ -55,35 +55,21 @@ class CounterFragment : Fragment() {
         cancelButton.setOnClickListener {
             taskExecuter.cancel(false)
         }
-        resultWidget.text = "Ready!"
         taskModel.currentValue.observe(this, Observer<Int> { item ->
             resultWidget.text = item.toString()
         })
         taskModel.status.observe(this, Observer<TaskStatus> {
             status ->
             when(status){
-                TaskStatus.Started -> resultWidget.text = "Task started"
-                TaskStatus.Stopped -> resultWidget.text = "Task stopped"
-                TaskStatus.Created -> resultWidget.text = "Task created"
-                TaskStatus.Finished -> resultWidget.text = "Task canceled"
+                TaskStatus.Started -> resultWidget.text = "Start"
+                TaskStatus.Stopped -> resultWidget.text = "Canceled"
+                TaskStatus.Created -> resultWidget.text = "Ready!"
+                TaskStatus.Finished -> resultWidget.text = "Done"
                 TaskStatus.Unknown -> resultWidget.text = "Task isn't created"
             }
         })
         return view
     }
-
-   /* override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        if (taskExecuter.isInProcess)
-            outState.putInt(Task_Current_Value, taskExecuter.currentValue)
-    }*/
-
-    /*override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState != null) {
-            taskExecuter.currentValue = savedInstanceState.getInt(Task_Current_Value)
-        }
-    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()
